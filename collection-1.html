@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Collection - Scarleto Vigganetes</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Roboto:wght@400&display=swap');
+
+  :root{
+    --wine: #900;
+    --wine-dark: #600;
+    --bg: #ffffff;
+    --card: #ffffff;
+    --text: #222;
+    --muted: #666;
+    --tag-bg: #f1e6e0;
+    --border: #e0d5cc;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  header {
+    background: var(--wine);
+    color: #fff;
+    padding: 14px 20px;
+    font-family: Arial, sans-serif;
+  }
+  header .site-name {
+    font-size: 1.3em;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+  header .site-name span { font-weight: normal; font-size: 0.7em; opacity: 0.85; }
+
+  main {
+    max-width: 760px;
+    margin: 24px auto;
+    padding: 0 16px 60px;
+  }
+
+  .collection-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .collection-title {
+    font-size: 1.8em;
+    color: var(--wine-dark);
+    margin: 0 0 6px;
+  }
+  .collection-author {
+    font-family: 'Alex Brush', cursive;
+    font-size: 1.8em;
+    color: var(--wine);
+    margin-bottom: 4px;
+  }
+  .collection-count {
+    font-family: Arial, sans-serif;
+    font-size: 0.85em;
+    color: var(--muted);
+  }
+
+  .filter-bar {
+    font-family: Arial, sans-serif;
+    font-size: 0.8em;
+    text-align: center;
+    margin-bottom: 24px;
+    color: var(--muted);
+  }
+
+  /* ---- Work item card ---- */
+  .work-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    background: #fff;
+    overflow: auto;
+  }
+
+  /* Cover floats left, A5 portrait ratio; body text wraps around it
+     and flows underneath once it runs past the cover's height. */
+  .work-cover {
+    float: left;
+    width: 115px;
+    aspect-ratio: 1 / 1.41;
+    background: var(--tag-bg);
+    overflow: hidden;
+    margin: 0 14px 6px 0;
+  }
+  .work-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .work-cover .fallback-label {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 0.65em;
+    color: var(--muted);
+    text-align: center;
+    padding: 6px;
+  }
+
+  .work-item-body {
+    min-width: 0;
+  }
+
+  /* Title image (user-styled PNG) with plain-text fallback.
+     Covers can be hard to read text over, so the title lives here instead. */
+  .work-item-title-img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    max-height: 46px;
+    margin-bottom: 4px;
+  }
+  .work-item-title-fallback {
+    display: none;
+    font-size: 1.15em;
+    margin: 0 0 4px;
+  }
+  .work-item-title-fallback a {
+    color: var(--wine-dark);
+    text-decoration: none;
+  }
+  .work-item-title-fallback a:hover { text-decoration: underline; }
+
+  .work-item-author {
+    font-family: Arial, sans-serif;
+    font-size: 0.8em;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+
+  .rating-row {
+    font-family: Arial, sans-serif;
+    font-size: 0.62em;
+    color: #fff;
+    display: flex;
+    gap: 5px;
+    margin: 6px 0;
+    flex-wrap: wrap;
+  }
+  .badge {
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+  }
+  .badge.rating { background: #4a4a4a; }
+  .badge.warning { background: #b45b00; }
+  .badge.category { background: #3d6b3d; }
+  .badge.status { background: var(--wine); }
+  .badge.status.wip { background: #a8842f; }
+
+  .fandom-row {
+    font-family: Arial, sans-serif;
+    font-size: 0.78em;
+    font-weight: bold;
+    color: var(--wine);
+    margin: 8px 0 3px;
+  }
+  .tags {
+    margin: 3px 0 8px;
+    font-family: Arial, sans-serif;
+    font-size: 0.78em;
+    color: var(--wine-dark);
+  }
+  .tags .tag-sep {
+    color: var(--muted);
+    margin: 0 4px;
+  }
+  .relationship {
+    font-weight: bold;
+  }
+
+  .work-summary {
+    margin-top: 8px;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 0.8em;
+    font-weight: 400;
+    font-style: normal;
+    color: #444;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .work-stats {
+    font-family: Arial, sans-serif;
+    font-size: 0.68em;
+    color: var(--muted);
+    margin-top: 8px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 480px) {
+    .work-cover {
+      width: 95px;
+    }
+  }
+
+  footer {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-size: 0.75em;
+    color: var(--muted);
+    padding: 20px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="site-name">My Archive <span>— personal fic collection</span></div>
+</header>
+
+<main>
+
+  <div class="collection-header">
+    <h1 class="collection-title">Collection Name</h1>
+    <div class="collection-author">Scarleto Vigganetes</div>
+    <div class="collection-count">3 works</div>
+  </div>
+
+  <div class="filter-bar">Sorted by: Date Updated</div>
+
+  <!-- ===== WORK ITEM 1 — duplicate this block for each fic =====
+       Title: point the img src at your own styled title-logo PNG
+       (hosted on Postimage/Imgur/etc). If it fails to load, the
+       plain-text link title underneath shows automatically instead. -->
+  <div class="work-item">
+    <div class="work-cover">
+      <img src="https://i.postimg.cc/XXXXXXXX/cover-fic1.jpg" alt="Cover art for First Fic Title" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+      <div class="fallback-label" style="display:none">cover</div>
+    </div>
+    <div class="work-item-body">
+
+      <img class="work-item-title-img" src="https://i.postimg.cc/YYYYYYYY/title-fic1.png" alt="First Fic Title" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+      <h2 class="work-item-title-fallback"><a href="fic1.html">First Fic Title</a></h2>
+
+      <div class="work-item-author">by Scarleto Vigganetes</div>
+
+      <div class="rating-row">
+        <span class="badge rating">Rating</span>
+        <span class="badge warning">Warnings</span>
+        <span class="badge category">Category</span>
+        <span class="badge status">Complete</span>
+      </div>
+
+      <div class="fandom-row">Fandom</div>
+      <div class="tags">
+        <span class="relationship">Character A/Character B</span><span class="tag-sep">;</span>
+        AU
+      </div>
+
+      <div class="work-summary">
+        One or two sentences summarizing this fic goes here.
+      </div>
+
+      <div class="work-stats">
+        <span>Words: 0</span>
+        <span>Chapters: 1/1</span>
+        <span>Updated: yyyy-mm-dd</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WORK ITEM 2 ===== -->
+  <div class="work-item">
+    <div class="work-cover">
+      <img src="https://i.postimg.cc/XXXXXXXX/cover-fic2.jpg" alt="Cover art for Second Fic Title" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+      <div class="fallback-label" style="display:none">cover</div>
+    </div>
+    <div class="work-item-body">
+
+      <img class="work-item-title-img" src="https://i.postimg.cc/YYYYYYYY/title-fic2.png" alt="Second Fic Title" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+      <h2 class="work-item-title-fallback"><a href="fic2.html">Second Fic Title</a></h2>
+
+      <div class="work-item-author">by Scarleto Vigganetes</div>
+
+      <div class="rating-row">
+        <span class="badge rating">Rating</span>
+        <span class="badge warning">Warnings</span>
+        <span class="badge category">Category</span>
+        <span class="badge status wip">Chapter 3/?</span>
+      </div>
+
+      <div class="fandom-row">Fandom</div>
+      <div class="tags">
+        Character B<span class="tag-sep">;</span>
+        Slow Burn
+      </div>
+
+      <div class="work-summary">
+        One or two sentences summarizing this fic goes here.
+      </div>
+
+      <div class="work-stats">
+        <span>Words: 0</span>
+        <span>Chapters: 3/?</span>
+        <span>Updated: yyyy-mm-dd</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WORK ITEM 3 ===== -->
+  <div class="work-item">
+    <div class="work-cover">
+      <img src="https://i.postimg.cc/XXXXXXXX/cover-fic3.jpg" alt="Cover art for Third Fic Title" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+      <div class="fallback-label" style="display:none">cover</div>
+    </div>
+    <div class="work-item-body">
+
+      <img class="work-item-title-img" src="https://i.postimg.cc/YYYYYYYY/title-fic3.png" alt="Third Fic Title" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+      <h2 class="work-item-title-fallback"><a href="fic3.html">Third Fic Title</a></h2>
+
+      <div class="work-item-author">by Scarleto Vigganetes</div>
+
+      <div class="rating-row">
+        <span class="badge rating">Rating</span>
+        <span class="badge category">Category</span>
+        <span class="badge status">Complete</span>
+      </div>
+
+      <div class="fandom-row">Fandom</div>
+      <div class="tags">
+        Crack<span class="tag-sep">;</span>
+        Fluff
+      </div>
+
+      <div class="work-summary">
+        One or two sentences summarizing this fic goes here.
+      </div>
+
+      <div class="work-stats">
+        <span>Words: 0</span>
+        <span>Chapters: 1/1</span>
+        <span>Updated: yyyy-mm-dd</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Personal archive — backup copy of my own fics.
+</footer>
+
+</body>
+</html>
